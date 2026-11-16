@@ -1,6 +1,6 @@
 // MyCollege portal - student/faculty console app
 // Faculty tools (attendance, announcements, performance) live in faculty_module,
-// the login/profile/feed/connections part lives in kaushal_module.
+// the login/profile/feed/connections part lives in student_module.
 
 #include <iostream>
 #include <string>
@@ -605,7 +605,7 @@ void runFacultyPortalFor(const string &name, const string &password,
 } // namespace faculty_module
 
 
-namespace kaushal_module {
+namespace student_module {
 
 struct User
 {
@@ -1218,15 +1218,15 @@ void facultyMenu(const User &u, AuthManager &auth, StudentPortal &portal,
     } while (choice != 11);
 }
 
-} // namespace kaushal_module
+} // namespace student_module
 
 
 int main()
 {
-    kaushal_module::AuthManager auth;
-    kaushal_module::StudentPortal portal;
-    kaushal_module::FeedManager feed;
-    kaushal_module::ConnectionManager links;
+    student_module::AuthManager auth;
+    student_module::StudentPortal portal;
+    student_module::FeedManager feed;
+    student_module::ConnectionManager links;
 
     cout << "\n============================================\n"
          << "          MYCOLLEGE INTEGRATED PORTAL\n"
@@ -1239,13 +1239,13 @@ int main()
     {
         cout << "\n================ MAIN MENU ================\n"
              << "1. Register\n2. Login\n3. Exit\n";
-        choice = kaushal_module::Input::number("Choose an option: ", 1, 3);
+        choice = student_module::Input::number("Choose an option: ", 1, 3);
 
         if (choice == 1)
         {
             if (auth.registerUser())
             {
-                const kaushal_module::User &u = auth.all().back();
+                const student_module::User &u = auth.all().back();
                 if (u.role == "student")
                     portal.registerStudent(u.id, u.fullName);
                 else
@@ -1254,13 +1254,13 @@ int main()
         }
         else if (choice == 2)
         {
-            kaushal_module::User loggedIn;
+            student_module::User loggedIn;
             if (auth.login(loggedIn))
             {
                 if (loggedIn.role == "student")
-                    kaushal_module::studentMenu(loggedIn, auth, portal, feed, links);
+                    student_module::studentMenu(loggedIn, auth, portal, feed, links);
                 else
-                    kaushal_module::facultyMenu(loggedIn, auth, portal, feed, links);
+                    student_module::facultyMenu(loggedIn, auth, portal, feed, links);
             }
         }
         else

@@ -11,7 +11,7 @@
 #include <limits>
 using namespace std;
 
-namespace faculty_module {
+namespace Faculty {
 
 const int MAX_RECORDS = 100;
 
